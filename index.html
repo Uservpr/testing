@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PasteLink</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+    <style>
+/* Untuk layar desktop */
+@media (min-width: 1024px) {
+    .menu-hidden {
+        display: none;
+    }
+    .form-mobile {
+      display: none;
+    }
+    .nav-hidde {
+      display: none;
+}
+}
+@media (max-width: 1023px) {
+  .from-desktop {
+    display: none;
+  }
+}
+
+        /* Primary Button Styles */
+.btn-primary {
+    background-color: #ffcc00; /* Yellow button */
+    color: #333; /* Darker text */
+}
+
+.btn-primary:hover {
+    background-color: #e6b800; /* Slightly darker yellow */
+}
+
+/* Floating Label Styles */
+.floating-label {
+    position: absolute;
+    top: 0.75rem;
+    left: 1rem;
+    transition: all 0.2s ease-out;
+    pointer-events: none;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.input-field:focus ~ .floating-label,
+.input-field:not(:placeholder-shown) ~ .floating-label {
+    top: -0.75rem;
+    left: 0.75rem;
+    font-size: 0.75rem;
+    color: #facc15; /* yellow-400 */
+}
+
+/* Toggle Input Styles */
+.toggle-input {
+    display: none;
+}
+
+.toggle-input:checked ~ .additional-input {
+    display: block;
+}
+.btn {
+  border-radius: 5px;
+  width: 300px;
+  height: 40px;
+  font-style: italic;
+  border: 1px solid black;
+}
+.textarea {
+  width: 540px;
+  height: 200px;
+}
+
+.menu-hidden {
+  display: none;
+}
+
+/* CSS */
+.btn {
+  align-items: center;
+  background: #FFFFFF;
+  border: 0 solid #E2E8F0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  color: #1A202C;
+  display: inline-flex;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 24px;
+  overflow-wrap: break-word;
+  padding: 24px;
+  text-decoration: none;
+  width: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+    </style>
+    <link rel="stylesheet" href="./style.css" type="text/css" media="all" />
+</head>
+<body class="bg-yellow-500 mb-6">
+  <!-- navbar app -->
+<nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center">
+                <img src="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon.ico" alt="favicon" class="w-8 h-8 mr-2">
+                <div class="text-yellow-600 text-2xl font-semibold">
+                    <a href="#">PasteLink</a>
+                </div>
+            </div>
+            <button class="text-yellow-600 lg:hidden" id="menu-btn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <div class="hidden lg:flex space-x-6">
+                <a href="#" class="text-yellow-600 hover:text-yellow-600 transition duration-300">Home</a>
+                <a href="#" class="text-gray-700 hover:text-yellow-600 transition duration-300">About</a>
+                <a href="#" class="text-gray-700 hover:text-yellow-600 transition duration-300">Services</a>
+                <a href="#" class="text-gray-700 hover:text-yellow-600 transition duration-300">Contact</a>
+            </div>
+        </div>
+        <div class="nav-hide menu-hidden bg-white shadow-md overflow-hidden" id="menu">
+            <a href="#" class="block text-yellow-600 hover:text-yellow-600 px-4 py-2 border-b border-gray-200 transition duration-300">Home</a>
+            <a href="#" class="block text-gray-700 hover:text-yellow-600 px-4 py-2 border-b border-gray-200 transition duration-300">About</a>
+            <a href="#" class="block text-gray-700 hover:text-yellow-600 px-4 py-2 border-b border-gray-200 transition duration-300">Services</a>
+            <a href="#" class="block text-gray-700 hover:text-yellow-600 px-4 py-2 transition duration-300">Contact</a>
+        </div>
+    </nav> <br/><br/><br/><br/>
+    <!-- form -->
+
+    <!-- form mobile -->
+<form class="form-mobile w-full max-w-lg space-y-6 bg-white p-6 rounded-md shadow-md mx-auto">
+  <h4 style="color: #FACC15" class="font-sans mb-3 mt-2 text-center">Create shortlink super easy</h4>
+  <h1 class="text-2xl font-semibold mb-8 text-center">Create Shorter Link</h1>
+  
+  <!-- Floating Label Input -->
+  <div class="relative">
+    <label for="title" class="block text-sm font-medium text-gray-700">Enter your title</label>
+    <input type="text" id="title" name="title"class="input-field peer block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" placeholder="Place your title here (no link)" />
+  </div>
+  
+  <!-- Floating Label Textarea -->
+  <div class="relative">
+    <label for="textOrLink" class="block text-sm font-medium text-gray-700">Enter your text or link</label>
+    <textarea id="textOrLink" name="textLink" class="input-field peer block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent resize-none" placeholder="Enter the main text of your paste"></textarea>
+  </div>
+  
+  <!-- Option Buttons with Conditional Input -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700">Visibility</label>
+    <div class="flex space-x-4 mt-2">
+      <button class="btn w-full bg-yellow-500" name="Public" id="btnPub">Public</button>
+      <button class="btn w-full bg-gray-300" name="private" id="btnPriv">Private</button>
+    </div>
+    
+    <div class="additional-input mt-4 hidden" id="password">
+      <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+      <input type="text" class="block w-full px-4 py-2 border border-gray-300 rounded-md" name="password" id="password" placeholder="Enter the password">
+    </div>
+  </div>
+  
+  <!-- Another Option Buttons -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700">Expiry</label>
+    <div class="flex space-x-4 mt-2">
+      <button class="btn w-full bg-yellow-500" name="never" id="btnNever">Never</button>
+      <button class="btn w-full bg-gray-300" name="expired" id="btnExpired">Expired</button>
+    </div>
+    
+    <div class="additional-input mt-4 hidden" id="Expired">
+      <label for="Expired" class="block text-sm font-medium text-gray-700">Expiry Date</label>
+      <input type="date" class="border w-full rounded px-4 py-2 focus:outline-none" name="expiredDate">
+    </div>
+  </div>
+  
+  <!-- Radio Buttons Group -->
+<div>
+  <fieldset>
+    <legend class="block text-sm font-medium text-gray-700">Style</legend>
+    <div class="flex space-x-4 mt-2">
+      <div class="flex items-center">
+        <input type="radio" id="default" name="style" value="default" class="mr-2" checked>
+        <label for="default">Default</label>
+      </div>
+      
+      <div class="flex items-center">
+        <input type="radio" id="flat" name="style" value="flat" class="mr-2">
+        <label for="flat">Flat</label>
+      </div>
+      
+      <div class="flex items-center">
+        <input type="radio" id="Neumorphism" name="style" value="Neumorphism" class="mr-2">
+        <label for="Neumorphism">Neumorphism</label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+  
+  <!-- Submit Button -->
+  <button type="submit" class="w-full px-4 py-2 bg-yellow-400 text-white font-semibold rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-300">Submit</button>
+</form>
+
+
+ <!-- form desktop -->
+
+<form class="from-desktop w-full max-w-6xl space-y-6 bg-white p-6 rounded-md shadow-md mx-auto">
+  <h4 class="font-sans mb-3 mt-2 text-center" style="color: #FACC15;">Create Shortlink Super Easy</h4>
+  <h1 class="text-4xl font-semibold mb-6 text-center">Create Shorter Link</h1>
+
+  <div style="padding-top: 40px" class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Enter your title</label>
+      <input type="text" id="title" name="Dtitle" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" placeholder="Place your title here (no link)" />
+    </div>
+    <div class="w-full md:w-1/2 px-3">
+      <label class="block text-sm font-medium text-gray-700 mb-2">Visibility</label>
+      <div class="flex space-x-4">
+        <button type="button" class="flex-1 px-4 py-2 bg-yellow-400 text-white font-semibold rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-300" name="Dpublic" id="DbtnPub">Public</button>
+        <button type="button" name="Dprivate" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400" id="DbtnPriv">Private</button>
+      </div>
+    </div>
+  </div>
+
+<div class="flex flex-wrap -mx-3 mb-6">
+    <div class="pr-1 px-3 mb-6 md:mb-0">
+      <label for="textOrLink" class="block text-sm font-medium text-gray-700 mb-2">Enter your text or link</label>
+      <textarea id="textOrLink" name="DtextLink" class="textarea px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent resize-none" placeholder="Enter the main text of your paste" rows="6"></textarea>
+    </div>
+    <div style="width: 566px" class="md:w-1/3 px-3 ml-1">
+      <div id="Dpassword" class="hidden">
+        <label for="DinputPassword" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+        <input type="password" id="DinputPassword" name="Dpassword" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" placeholder="Enter the password" />
+      </div>
+      <div class="flex flex-wrap -mx-3 mb-6">
+        <div class="w-full px-3 mb-6 md:mb-0">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Expiry</label>
+          <div class="flex space-x-4">
+            <button type="button" class="flex-1 px-4 py-2 bg-yellow-400 text-white font-semibold rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-300" name="Dnever" id="DbtnNever">Never</button>
+            <button type="button" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-gray-400" name="Dexpired" id="DbtnExpired">Expired</button>
+          </div>
+        </div>
+        <div class="w-full px-3">
+          <div id="DExpired" class="hidden">
+            <label for="DinputExpired" class="block text-sm font-medium text-gray-700 mb-2">Expired Date</label>
+            <input type="date" id="DinputExpired" name="DexpiredDate" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" />
+          </div>
+        </div>
+      </div>
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Style</label>
+        <div class="flex space-x-4">
+          <label class="inline-flex items-center">
+            <input type="radio" name="Dstyle" value="default" class="form-radio text-yellow-400" checked>
+            <span class="ml-2">Default</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="Dstyle" value="flat" class="form-radio text-yellow-400">
+            <span class="ml-2">Flat</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="Dstyle" value="Neumorphism" class="form-radio text-yellow-400">
+            <span class="ml-2">Neumorphism</span>
+          </label>
+        </div>
+      </div>
+      <div style="margin-top: 45px">
+              <button type="submit" style="width: 80px" class="px-4 py-2 bg-yellow-400 text-white font-semibold rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-300">Publish</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+const menuBtn = document.getElementById('menu-btn');
+        const menu = document.getElementById('menu');
+
+        menuBtn.addEventListener('click', () => {
+            if (menu.classList.contains('menu-hidden')) {
+                menu.classList.remove('menu-hidden');
+            } else {
+                menu.classList.add('menu-hidden');
+            }
+        });
+  // Handle Private Button
+document.getElementById('DbtnPriv').addEventListener('click', function() {
+  toggleVisibility('Dpassword', true);
+  updateButtonStyles(this, 'DbtnPub');
+});
+
+// Handle Public Button
+document.getElementById('DbtnPub').addEventListener('click', function() {
+  toggleVisibility('Dpassword', false);
+  updateButtonStyles(this, 'DbtnPriv');
+});
+
+// Handle Expired Button
+document.getElementById('DbtnExpired').addEventListener('click', function() {
+  toggleVisibility('DExpired', true);
+  updateButtonStyles(this, 'DbtnNever');
+});
+
+// Handle Never Expired Button
+document.getElementById('DbtnNever').addEventListener('click', function() {
+  toggleVisibility('DExpired', false);
+  updateButtonStyles(this, 'DbtnExpired');
+});
+
+// Function to toggle visibility
+function toggleVisibility(elementId, show) {
+  const element = document.getElementById(elementId);
+  if (show) {
+    element.classList.remove('hidden');
+  } else {
+    element.classList.add('hidden');
+  }
+}
+
+// Function to update button styles
+function updateButtonStyles(activeButton, inactiveButtonId) {
+  const inactiveButton = document.getElementById(inactiveButtonId);
+
+  activeButton.classList.add('bg-yellow-400', 'text-white', 'shadow-lg');
+  activeButton.classList.remove('bg-gray-200', 'text-gray-700');
+
+  inactiveButton.classList.remove('bg-yellow-400', 'text-white', 'shadow-lg');
+  inactiveButton.classList.add('bg-gray-200', 'text-gray-700');
+}
+// logika mobile ui
+
+  let btnPriv = document.getElementById('btnPriv');
+  let btnPub = document.getElementById('btnPub');
+  let password = document.getElementById('password');
+  let neverBtn = document.getElementById('btnNever');
+  let btnExpired = document.getElementById('btnExpired');
+  let expired = document.getElementById('Expired');
+
+  btnPriv.addEventListener('click', function(event) {
+      event.preventDefault();
+      password.classList.remove('hidden');
+      btnPriv.classList.add('bg-yellow-500');
+      btnPriv.classList.remove('bg-gray-300');
+      btnPub.classList.add('bg-gray-300');
+      btnPub.classList.remove('bg-yellow-500');
+  });
+
+  btnPub.addEventListener('click', function(event) {
+      event.preventDefault();
+      password.classList.add('hidden');
+      btnPub.classList.add('bg-yellow-500');
+      btnPub.classList.remove('bg-gray-300');
+      btnPriv.classList.add('bg-gray-300');
+      btnPriv.classList.remove('bg-yellow-500');
+  });
+
+  neverBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      expired.classList.add('hidden');
+      neverBtn.classList.add('bg-yellow-500');
+      neverBtn.classList.remove('bg-gray-300');
+      btnExpired.classList.add('bg-gray-300');
+      btnExpired.classList.remove('bg-yellow-500');
+  });
+
+  btnExpired.addEventListener('click', function(event) {
+      event.preventDefault();
+      expired.classList.remove('hidden');
+      btnExpired.classList.add('bg-yellow-500');
+      btnExpired.classList.remove('bg-gray-300');
+      neverBtn.classList.add('bg-gray-300');
+      neverBtn.classList.remove('bg-yellow-500');
+  });
+</script>
+</body>
+</html>
